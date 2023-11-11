@@ -58,7 +58,7 @@ PonenciaSchema.methods.setCertificadoEventoUrlPonencia = function setCertificado
     const host = process.env.API_HOST
     const port = process.env.API_PORT
 
-    this.certificadoEventoUrlPonencia = `${host}:${port}/public/ponencias/${filename}`
+    this.certificadoEventoUrlPonencia = `${host}/public/ponencias/${filename}`
 
 }
 
@@ -66,7 +66,7 @@ PonenciaSchema.methods.setPosterEventoUrlPonencia = function setPosterEventoUrlP
     const host = process.env.API_HOST
     const port = process.env.API_PORT
 
-    this.posterEventoUrlPonencia = `${host}:${port}/public/ponencias/${filename}`
+    this.posterEventoUrlPonencia = `${host}/public/ponencias/${filename}`
 
 }
 
@@ -74,7 +74,7 @@ PonenciaSchema.methods.setPresentacionEventoUrlPonencia = function setPresentaci
     const host = process.env.API_HOST
     const port = process.env.API_PORT
 
-    this.presentacionEventoUrlPonencia = `${host}:${port}/public/ponencias/${filename}`
+    this.presentacionEventoUrlPonencia = `${host}/public/ponencias/${filename}`
 
 }
 
@@ -82,11 +82,9 @@ PonenciaSchema.methods.setImagenMemoriasUrlPonencia = function setImagenMemorias
     const host = process.env.API_HOST
     const port = process.env.API_PORT
 
-    this.imagenMemoriasUrlPonencia = `${host}:${port}/public/ponencias/${filename}`
+    this.imagenMemoriasUrlPonencia = `${host}/public/ponencias/${filename}`
 
 }
-
-
 
 const Ponencia = mongoose.model("ponencia", PonenciaSchema)
 
