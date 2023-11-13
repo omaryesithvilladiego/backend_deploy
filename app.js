@@ -38,7 +38,7 @@ app.use(cors())
 app.use('/usuarios', usuarioRoute)
 app.use('/estudiante', estudianteRoute)
 
-app.use(function(req, res, next) {
+app.use( '/', function(req, res, next) {
    res.send('from index' )
 });
 
