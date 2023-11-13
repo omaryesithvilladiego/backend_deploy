@@ -38,9 +38,6 @@ app.use(cors())
 app.use('/usuarios', usuarioRoute)
 app.use('/estudiante', estudianteRoute)
 
-app.use( '/', function(req, res, next) {
-   res.send('from index' )
-});
 
 //Database conection settings
 moongose.set('strictQuery', false);
