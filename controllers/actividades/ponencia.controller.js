@@ -39,7 +39,7 @@ exports.create = async (req,res) => {
         ciudadEventoPonencia: req.body.ciudadEventoPonencia,
         certificadoEventoUrlPonencia: req.body.certificadoEventoUrlPonencia,
         posterEventoUrlPonencia: req.body.posterEventoUrlPonencia,
-        presentacionEventoUrlPonencia: req.body. presentacionEventoUrlPonencia,
+        presentacionEventoUrlPonencia: req.body.presentacionEventoUrlPonencia,
         imagenMemoriasUrlPonencia: req.body.imagenMemoriasUrlPonencia,
         fechaPonencia: req.body.fechaPonencia,
         idEstudiantePonencia: req.body.idEstudiantePonencia,
