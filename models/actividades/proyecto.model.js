@@ -25,22 +25,23 @@ const ProyectoSchema = new Schema({
         type:String,
         require:true
     },
-    opcionTrabajoDeGrado:  {
-        actaTrabajoGradoUrl: {
+    
+    actaTrabajoGradoUrl: {
             type:String
-        },
-        actaInvestigacionUrl: {
-            type:String
-        },
-        repositorioUcc: {
-            type:String
-        },
     },
+    actaInvestigacionUrl: {
+            type:String
+    },
+    repositorioUcc: {
+    type:String
+    
+    },
+  
     idEstudianteProyecto: {
         type:ObjectId,
         require:true
     },
-    estadoPonencia: {
+    estadoProyecto: {
         type:String,
         require:true
     }
@@ -49,6 +50,32 @@ const ProyectoSchema = new Schema({
 
 
 })
+
+
+ProyectoSchema.methods.setCertificadoResultadoPremioUrl = function setCertificadoResultadoPremioUrl(filename) {
+    const host = process.env.API_HOST
+    const port = process.env.API_PORT
+
+    this.certificadoResultadoPremioUrl = `${host}:${port}/public/proyectos/${filename}`
+
+}
+
+
+ProyectoSchema.methods.setActaTrabajoGradoUrl = function setActaTrabajoGradoUrl(filename) {
+    const host = process.env.API_HOST
+    const port = process.env.API_PORT
+
+    this.actaTrabajoGradoUrl = `${host}:${port}/public/proyectos/${filename}`
+
+}
+
+ProyectoSchema.methods.setActaInvestigacionUrl = function setActaInvestigacionUrl(filename) {
+    const host = process.env.API_HOST
+    const port = process.env.API_PORT
+
+    this.actaInvestigacionUrl = `${host}:${port}/public/proyectos/${filename}`
+
+}
 
 
 

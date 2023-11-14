@@ -55,7 +55,7 @@ const server = app.listen(process.env.API_PORT,() =>{
 
 app.use("/producto", productoRouter)
 app.use("/producto-second", productoSecond)
-app.use('/proyecto', proyectoRoute)
+app.use('/proyecto',auth,proyectoRoute)
 app.use('/curso', cursoRoute)
 app.use('/premio', premioRoute)
 app.use('/ponencia' , auth, ponenciaRouter)

@@ -3,7 +3,7 @@ const path = require("path");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'storage');
+    cb(null, 'storage/proyectos/');
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -23,6 +23,6 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-const upload = multer({ storage, fileFilter }).fields([{name: "imgUrl"}, {name:"imgUrl2"}]);
+const upload = multer({ storage, fileFilter }).fields([{name: "certificadoResultadoPremioUrl"}, {name:"actaTrabajoGradoUrl"}, {name:'actaInvestigacionUrl'}]);
 
 module.exports = upload;

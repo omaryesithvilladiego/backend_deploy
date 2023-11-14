@@ -30,7 +30,7 @@ exports.create = async (req,res) => {
         exito:false
     }
 
-    console.log(req.body)
+
 
     let ponencia = new PonenciaModel({
         nombreEventoPonencia: req.body.nombreEventoPonencia,
@@ -47,7 +47,7 @@ exports.create = async (req,res) => {
 
     })
 
-    console.log(req.files)
+
 
     if(req.files) {
         const certificado = req.files.certificadoEventoUrlPonencia[0].filename
