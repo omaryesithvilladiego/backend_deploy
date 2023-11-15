@@ -52,7 +52,7 @@ exports.login = async (req,res) => {
            
         }
         
-        console.log(req.body.nombreUsuario)
+       
        if(data != null) {
         response.type = req.body.nombreUsuario
         response.token = jwt.sign({
