@@ -36,14 +36,14 @@ exports.createuserRoot = async (req,res) => {
 
 exports.login = async (req,res) => {
     let hashedpass = crypto.createHash("sha512").update(req.body.contraseñaUsuario).digest("hex")
-
+    
     try {
-
         const data = await UsuarioModel.findOne({
             nombreUsuario: req.body.nombreUsuario,
             contraseñaUsuario: hashedpass,
     
         })
+
 
         let response = {
             token:null,

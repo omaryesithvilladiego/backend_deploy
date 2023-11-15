@@ -35,9 +35,6 @@ app.use('/public', express.static(`${__dirname}/storage`))
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(cors())
 
-app.use("/", (req,res) => {
-  res.send("From Index")
-})
 
 
 
@@ -67,6 +64,10 @@ app.use('/premio', premioRoute)
 app.use('/ponencia' , auth, ponenciaRouter)
 app.use('/proyecto',auth,proyectoRoute)
 
+
+app.use("/", (req,res) => {
+  res.send("From Index")
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
