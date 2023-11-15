@@ -5,10 +5,37 @@ const usuarioModel = require("../models/usuario.model")
 
 
 
+
+exports.createuserRoot = async (req,res) => {
+
+    let hashedpass = crypto.createHash("sha512").update("0000").digest("hex")
+
+
+
+
+    let usuario = new UsuarioModel({
+        nombreUsuario: "root",
+        contraseñaUsuario: hashedpass,
+    })
+
+
+    try {
+        const response = usuario.save()
+        res.send("El usurio se guardó correctamente en la base de datos")
+    } catch (error) {
+        res.send("Error al guardar el usuario root")
+        console.log(error)
+    }
+
+
+    
+
+}
+
+
+
 exports.login = async (req,res) => {
     let hashedpass = crypto.createHash("sha512").update(req.body.contraseñaUsuario).digest("hex")
-
-    console.log(req.body)
 
     try {
 
@@ -20,11 +47,14 @@ exports.login = async (req,res) => {
 
         let response = {
             token:null,
-            data:data
+            data:data,
+            type:null
            
         }
         
+        console.log(req.body.nombreUsuario)
        if(data != null) {
+        response.type = req.body.nombreUsuario
         response.token = jwt.sign({
             id: data._id,
             usuario: data.nombreUsuario

@@ -19,10 +19,12 @@ const auth = require('./auth/main_auth')
 
 
 
+
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
+
 
 app.use(express.static('public'));
 app.use(logger('dev'));
@@ -55,10 +57,11 @@ const server = app.listen(process.env.API_PORT,() =>{
 
 app.use("/producto", productoRouter)
 app.use("/producto-second", productoSecond)
-app.use('/proyecto',auth,proyectoRoute)
+
 app.use('/curso', cursoRoute)
 app.use('/premio', premioRoute)
 app.use('/ponencia' , auth, ponenciaRouter)
+app.use('/proyecto',auth,proyectoRoute)
 
 
 // catch 404 and forward to error handler

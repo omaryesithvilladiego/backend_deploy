@@ -147,7 +147,7 @@ exports.create = async (req,res) => {
                from: "omar.villadiegoc@campusucc.edu.co",
                to:mail,
                subject:'Usuario y contraseña de incio de sesión',
-               body:'Este es tu codigo',
+               body:'Este es tu codig',
                text: "Este es tu usuario y contraseña",
                html: `<div> Tu usuario es: ${user}, tu contraseña es: ${passw}, se sugiere cambiar la contraseña al iniciar sesión </div>`
            },(err) => {

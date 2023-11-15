@@ -25,33 +25,33 @@ exports.create = async (req,res) => {
 
     })
 
-    console.log(req.files)
+  
 
-    // if(req.files) {
-    //     const certificado = req.files.certificadoResultadoPremioUrl[0].filename
-    //     const actaGrado = req.files.actaTrabajoGradoUrl[0].filename
-    //     const actaInves = req.files.actaInvestigacionUrl[0].filename
-    //     proyecto.setCertificadoResultadoPremioUrl(certificado)
-    //     proyecto.setActaTrabajoGradoUrl(actaGrado)
-    //     proyecto.setActaInvestigacionUrl(actaInves)
-    // }
-
-
-    res.send('hi')
+        if(req.files) {
+         const certificado = req.files.certificadoResultadoPremioUrl[0].filename
+         const actaGrado = req.files.actaTrabajoGradoUrl[0].filename
+         const actaInves = req.files.actaInvestigacionUrl[0].filename
+         proyecto.setCertificadoResultadoPremioUrl(certificado)
+         proyecto.setActaTrabajoGradoUrl(actaGrado)
+         proyecto.setActaInvestigacionUrl(actaInves)
+     }
 
 
-    // try {
-    //     await proyecto.save()
-    //     message.exito = true
-    //     message.msg="El proyecto ha sido guardado en la base de datos"
-    //     res.send(message)
-    // } catch (err) {
-    //     console.log(err)
-    //     message.exito = false
-    //     message.msg = "Error al guardar el proyecto, revisar..."
-    //     res.send(message)
-    //     return
-    // }
+   
+
+
+     try {
+         await proyecto.save()
+         message.exito = true
+         message.msg="El proyecto ha sido guardado en la base de datos"
+         res.send(message)
+     } catch (err) {
+         console.log(err)
+         message.exito = false
+         message.msg = "Error al guardar el proyecto, revisar..."
+         res.send(message)
+         return
+     }
 
 
 

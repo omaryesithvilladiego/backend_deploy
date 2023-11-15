@@ -16,7 +16,7 @@ const usuarioSchema = new Schema({
     },
     idUsuarioRegistro: {
         type:ObjectId,
-        require: true,
+       
         
     }
 })

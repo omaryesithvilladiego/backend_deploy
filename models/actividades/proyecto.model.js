@@ -27,10 +27,12 @@ const ProyectoSchema = new Schema({
     },
     
     actaTrabajoGradoUrl: {
-            type:String
+            type:String,
+            require:true
     },
     actaInvestigacionUrl: {
-            type:String
+            type:String,
+            require:true
     },
     repositorioUcc: {
     type:String
