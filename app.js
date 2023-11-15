@@ -35,10 +35,6 @@ app.use('/public', express.static(`${__dirname}/storage`))
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(cors())
 
-app.use("/", (req,res) => {
-  res.send("From Index")
-})
-
 
 
 app.use('/usuarios', usuarioRoute)
