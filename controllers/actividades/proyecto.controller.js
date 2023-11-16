@@ -3,6 +3,34 @@ const mongoose = require("mongoose")
 const ObjectId = mongoose.Types.ObjectId
 
 
+
+exports.obetenerProyectosById = async (req, res) => {
+    let message= {
+        msg:"",
+        exito:false,
+        datos:null
+    }
+
+    const filterId = {idEstudianteProyecto:idEstudianteProyecto}
+
+    try {
+
+        const proyectos = ProyectoModel.findById({filterId})
+        message.datos = proyectos
+        message.msg = "Los proyectos se han obtenido correctamente"
+        message.exito = true
+        res.send(message)
+    } catch (error) {
+        console.log(error)
+        message.msg = "Error al obtener los proyectos"
+        message.exito = false
+        res.send(message)
+    }
+
+
+} 
+
+
 exports.create = async (req,res) => {
    
     let message= {
@@ -10,7 +38,8 @@ exports.create = async (req,res) => {
         exito:false
     }
 
-    console.log(req.body)
+  
+
 
     let proyecto = new ProyectoModel({
         nombrePremio: req.body.nombrePremio,

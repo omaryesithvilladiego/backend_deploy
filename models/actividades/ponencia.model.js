@@ -42,7 +42,7 @@ const PonenciaSchema = new Schema({
         require:true
     },
     idEstudiantePonencia: {
-        type:String ,
+        type:ObjectId,
         require:true
     },
     estadoPonencia: {
