@@ -34,6 +34,7 @@ exports.createuserRoot = async (req,res) => {
 
 
 
+
 exports.login = async (req,res) => {
     let hashedpass = crypto.createHash("sha512").update(req.body.contraseñaUsuario).digest("hex")
     
@@ -61,6 +62,7 @@ exports.login = async (req,res) => {
         }, "__recret__",
         {expiresIn: "12h"})
        }
+      
        res.json(response)
        
         
