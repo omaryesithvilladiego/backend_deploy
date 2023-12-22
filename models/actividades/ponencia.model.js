@@ -48,7 +48,13 @@ const PonenciaSchema = new Schema({
     estadoPonencia: {
         type:String ,
         require:true
+    },
+    colorEstadoPonencia: {
+        type:String,
+        
     }
+
+    
     
 
    

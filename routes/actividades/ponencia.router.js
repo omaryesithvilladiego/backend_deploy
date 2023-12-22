@@ -4,6 +4,6 @@ const ponenciaController = require("../../controllers/actividades/ponencia.contr
 const upload = require("../../libs/storagePonencia")
 
 router.post("/create-ponencia", upload, ponenciaController.create)
-router.get('/obtener-ponencias', ponenciaController.obtener)
+router.get('/obtener-ponencia', ponenciaController.obtener)
 
 module.exports = router

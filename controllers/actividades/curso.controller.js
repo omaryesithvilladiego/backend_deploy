@@ -1,5 +1,29 @@
 const CursoModel = require("../../models/actividades/cursos.model")
 
+exports.obtener = async (req,res) => {
+    let response = {
+        msg:'',
+        exito:false
+    }
+
+    try {
+
+        const data = await CursoModel.find({})
+        response.msg = 'Los cursos se han obtenido con correctamente'
+        response.exito = true
+        res.send(data)
+    } catch (error) {
+        console.log(error)
+        response.msg = 'Error al obtener los cursos'
+        response.exito = false
+        res.send(response)
+    }
+
+
+
+}
+ 
+
 exports.create = async (req,res) => {
     let response = {
         msg:"",
