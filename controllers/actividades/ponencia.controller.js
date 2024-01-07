@@ -1,15 +1,42 @@
 const PonenciaModel = require("../../models/actividades/ponencia.model")
 
 
+exports.obtenerTodas = async (req,res) => {
+    let response = {
+        msg:'',
+        exito:false
+    }
+
+ 
+
+    try {
+
+        const data = await PonenciaModel.find({})
+        response.msg = 'Las ponencias se han obtenido correctamente'
+        response.exito = true
+        res.send(data)
+    } catch (error) {
+        console.log(error)
+        response.msg = 'Error al obtener las ponencias'
+        response.exito = false
+        res.send(response)
+    }
+
+
+}
+
+
 exports.obtener = async (req,res) => {
     let response = {
         msg:'',
         exito:false
     }
 
+    const idUsuario = req.params.idUsuario
+
     try {
 
-        const data = await PonenciaModel.find({})
+        const data = await PonenciaModel.find({idEstudiantePonencia:idUsuario})
         response.msg = 'Las ponencias se han obtenido con correctamente'
         response.exito = true
         res.send(data)
