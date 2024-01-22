@@ -18,7 +18,22 @@ const usuarioSchema = new Schema({
         type:ObjectId,
        
         
+    },
+    fotoPerfilUrl: 
+    {
+
+        type:String
+
+    },
+    fotoPortadaUrl:
+    {
+
+        type:String
+
     }
 })
 
+
 module.exports = moongose.model('usuarios', usuarioSchema)
+
+

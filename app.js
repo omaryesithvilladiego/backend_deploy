@@ -16,6 +16,7 @@ const ponenciaRouter = require("./routes/actividades/ponencia.router")
 const cors = require("cors");
 require("dotenv").config();
 const auth = require('./auth/main_auth')
+const bodyParser = require('body-parser');
 
 
 
@@ -26,6 +27,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 
 
+app.use(bodyParser.json());
 app.use(express.static('public'));
 app.use(logger('dev'));
 app.use(express.json());
@@ -53,7 +55,9 @@ const server = app.listen(process.env.API_PORT,() =>{
 
 })
 
-
+app.use("/", (req,res) => {
+  res.send("From Index")
+})
 
 
 app.use("/producto", productoRouter)
@@ -82,9 +86,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.use("/", (req,res) => {
-  res.send("From Index")
-})
+
 
 
 module.exports = app;
