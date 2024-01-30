@@ -28,20 +28,17 @@ app.set('views', path.join(__dirname, 'views'));
 
 
 app.use(bodyParser.json());
-app.use(express.static('public'));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/public', express.static(`${__dirname}/storage`))
-app.use(express.static(path.join(__dirname, 'public')))
 app.use(cors())
 
 
 
 
-app.use('/usuarios', usuarioRoute)
-app.use('/estudiante', estudianteRoute)
+
 
 
 //Database conection settings
@@ -55,18 +52,23 @@ const server = app.listen(process.env.API_PORT,() =>{
 
 })
 
-app.use("/", (req,res) => {
-  res.send("From Index")
-})
+
+
+
 
 
 app.use("/producto", productoRouter)
 app.use("/producto-second", productoSecond)
-
+app.use('/usuarios', usuarioRoute)
+app.use('/estudiante', estudianteRoute)
 app.use('/curso', cursoRoute)
 app.use('/premio', premioRoute)
 app.use('/ponencia' , auth, ponenciaRouter)
 app.use('/proyecto',auth,proyectoRoute)
+
+app.use("/", (req,res) => {
+  res.json("From Index")
+})
 
 
 
@@ -74,6 +76,10 @@ app.use('/proyecto',auth,proyectoRoute)
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
+
+
+
 
 // error handler
 app.use(function(err, req, res, next) {

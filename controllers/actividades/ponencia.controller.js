@@ -37,7 +37,7 @@ exports.obtener = async (req,res) => {
     try {
 
         const data = await PonenciaModel.find({idEstudiantePonencia:idUsuario})
-        response.msg = 'Las ponencias se han obtenido con correctamente'
+        response.msg = 'Las ponencias se han obtenido correctamente'
         response.exito = true
         res.send(data)
     } catch (error) {
@@ -76,7 +76,7 @@ exports.create = async (req,res) => {
     })
 
 
-
+    console.log(req.files)
     if(req.files) {
         const certificado = req.files.certificadoEventoUrlPonencia[0].filename
         const presentacionEvento = req.files.presentacionEventoUrlPonencia[0].filename
@@ -111,3 +111,47 @@ exports.create = async (req,res) => {
 
 
 }
+
+
+exports.eliminarPonenciaYArchivos = async  (req, res) => {
+    const ponenciaId = req.params.id; // Asumiendo que pasas el ID de la ponencia como parámetro en la URL
+  
+    try {
+      // Obtener la ponencia para obtener las URL de las imágenes
+      const ponencia = await Ponencia.findById(ponenciaId);
+  
+      // Verificar si la ponencia existe
+      if (!ponencia) {
+        return res.status(404).json({ mensaje: 'Ponencia no encontrada' });
+      }
+  
+      // Eliminar las imágenes del almacenamiento local
+      eliminarArchivoLocal(ponencia.certificadoEventoUrlPonencia);
+      eliminarArchivoLocal(ponencia.posterEventoUrlPonencia);
+      eliminarArchivoLocal(ponencia.presentacionEventoUrlPonencia);
+      eliminarArchivoLocal(ponencia.imagenMemoriasUrlPonencia);
+  
+      // Eliminar la ponencia de la base de datos
+      await Ponencia.findByIdAndRemove(ponenciaId);
+  
+      res.json({ mensaje: 'Ponencia y archivos eliminados exitosamente' });
+    } catch (error) {
+      console.error('Error al eliminar ponencia y archivos:', error);
+      res.status(500).json({ mensaje: 'Error interno del servidor' });
+    }
+  }
+  
+  // Función auxiliar para eliminar archivos del almacenamiento local
+  function eliminarArchivoLocal(url) {
+    const filePath = path.join(__dirname, '..', 'storage', 'ponencias', path.basename(url));
+  
+    // Eliminar el archivo
+    fs.unlink(filePath, (err) => {
+      if (err) {
+        console.error(`Error al eliminar el archivo ${filePath}: ${err}`);
+      } else {
+        console.log(`Archivo ${filePath} eliminado con éxito`);
+      }
+    });
+  }
+  
