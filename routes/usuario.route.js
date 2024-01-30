@@ -10,6 +10,7 @@ router.post("/create-user-root", usuarioController.createuserRoot)
 router.post("/change-password/:idUsuario/:newPassword", usuarioController.changePass)
 router.post("/recovery-password", usuarioController.passwordRecovery)
 router.post('/actualizar-foto-perfil/:idUsuario',upload,usuarioController.agregarFotoPerfil )
+router.post('/obtener-foto-perfil/:idUsuario', usuarioController.obtenerFotoPerfil)
 
 module.exports = router
 

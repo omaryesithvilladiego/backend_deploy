@@ -7,6 +7,7 @@ const EstudianteModel = require('../models/estudiante/estudiante.model')
 const transporter = require('../helpers/mail')
 const { ObjectId } = require("mongodb")
 const fs = require('fs');
+require("dotenv").config();
 
 
 
@@ -109,6 +110,7 @@ exports.passwordRecovery = async (req,res) => {
 
 }
 
+
 exports.changePass = async (req,res) => {
     
     let response = {
@@ -202,71 +204,79 @@ exports.usuariosDisponibleles = async (req,res) => {
 
 }
 
+exports.obtenerFotoPerfil = async (req, res) => {
+    const response = {
+        msg : '',
+        exito: false,
+        data: null
+    }
+    const idUsuario = req.params.idUsuario
+    console.log(req.params.idUsuario)
+
+    try {
+
+        const data = await UsuarioModel.findOne({idUsuarioRegistro:idUsuario})
+        response.data = data
+        response.msg = 'Transacción correcta'
+        response.exito = true
+        res.send(response)
+        
+    } catch (err) {
+        console.log(err)
+        response.msg = 'Algo ocurrió mal'
+        res.send(response)
+    }
+
+
+    
+
+}
+
 
 
 
 exports.agregarFotoPerfil = async (req, res) => {
     const idUsuario = req.params.idUsuario;
-    let fotoPerfilUrl = '';
+    let fotoPerfilUrl = null;
 
     const response = {
         msg: "",
         exito: false
     };
 
-    let dataEs = null
+    const host = process.env.API_HOST
+    const port = process.env.API_PORT
 
-    let binaryData = null
+
+
+    const fotoperfil = req.files.fotoPerfilUrl[0].filename
+    fotoPerfilUrl = `${host}:${port}/public/perfil/${fotoperfil}`
+
    
-   // Asegúrate de que req.body.imagen contiene una cadena Base64 válida
-if (/^data:image\/\w+;base64,/.test(req.body.imagen)) {
-    // Elimina el encabezado de la cadena Base64
-    const base64Data = req.body.imagen.replace(/^data:image\/\w+;base64,/, '');
-  
-    // Decodifica la cadena Base64 a datos binarios
-    binaryData = Buffer.from(base64Data, 'base64');
-    
-    const host = process.env.API_HOST;
-    const port = process.env.API_PORT;
-  
-    // Escribe los datos binarios en un archivo
-     fs.writeFile(`${host}:${port}/public/perfil/`, binaryData, 'binary', (err) => {
-      if (err) {
-        console.error('Error al escribir el archivo:', err);
-        return;
-      }
-  
-      console.log('Archivo guardado correctamente');
-    });
-  } else {
-    console.error('La cadena proporcionada no es una cadena Base64 válida');
-  }
-
-
- 
         
        
 
-    try {
-        const respuesta = await UsuarioModel.findOneAndUpdate(
-            { idUsuarioRegistro: idUsuario }, 
-            { fotoPerfilUrl: fotoPerfilUrl },
-            { new: true } // Para devolver el documento modificado
-        );
-
-        if (respuesta) {
-            response.exito = true;
-            response.msg = "La foto de perfil se ha agregado exitosamente";
-            res.send(response);
-        } else {
-            response.msg = "No se encontró un usuario con el ID proporcionado";
-            res.status(404).send(response);
-        }
-    } catch (err) {
-        console.log(err);
-        response.msg = "Error al guardar la foto de perfil, revisar...";
-        res.status(500).send(response);
-    }
+     try {
+         const respuesta = await UsuarioModel.findOneAndUpdate(
+             { idUsuarioRegistro: idUsuario }, 
+             { fotoPerfilUrl: fotoPerfilUrl },
+             { new: true } // Para devolver el documento modificado
+         )
+         if (respuesta) {
+             response.exito = true;
+             response.msg = "La foto de perfil se ha agregado exitosamente";
+             res.send(response);
+             console.log(respuesta)
+         } else {
+             response.msg = "No se encontró un usuario con el ID proporcionado";
+             res.status(404).send(response);
+         }
+     } catch (err) {
+         console.log(err);
+         response.msg = "Error al guardar la foto de perfil, revisar...";
+         res.status(500).send(response);
+     }
+   
 };
 
 
