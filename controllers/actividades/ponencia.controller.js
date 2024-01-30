@@ -118,7 +118,7 @@ exports.eliminarPonenciaYArchivos = async  (req, res) => {
   
     try {
       // Obtener la ponencia para obtener las URL de las imágenes
-      const ponencia = await Ponencia.findById(ponenciaId);
+      const ponencia = await PonenciaModel.findById(ponenciaId);
   
       // Verificar si la ponencia existe
       if (!ponencia) {
@@ -132,7 +132,7 @@ exports.eliminarPonenciaYArchivos = async  (req, res) => {
       eliminarArchivoLocal(ponencia.imagenMemoriasUrlPonencia);
   
       // Eliminar la ponencia de la base de datos
-      await Ponencia.findByIdAndRemove(ponenciaId);
+      await PonenciaModel.findByIdAndRemove(ponenciaId);
   
       res.json({ mensaje: 'Ponencia y archivos eliminados exitosamente' });
     } catch (error) {

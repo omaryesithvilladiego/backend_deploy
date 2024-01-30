@@ -12,8 +12,12 @@ exports.delete = async (req,res) => {
     exito: false,
   }
 
+ 
 
   try {
+    const data = await usuarioModel.findOne({idUsuarioRegistro:req.body._id})
+    eliminarArchivoLocal(data.fotoPerfilUrl)
+    console.log(data)
     await usuarioModel.deleteOne({idUsuarioRegistro:req.body._id})
     await EstudianteModel.deleteOne({_id:req.body._id})
     response.exito = true
@@ -27,6 +31,21 @@ exports.delete = async (req,res) => {
     res.send(response)
   }
 }
+
+// Función auxiliar para eliminar archivos del almacenamiento local
+function eliminarArchivoLocal(url) {
+  const filePath = path.join(__dirname, '..', 'storage', 'ponencias', path.basename(url));
+
+  // Eliminar el archivo
+  fs.unlink(filePath, (err) => {
+    if (err) {
+      console.error(`Error al eliminar el archivo ${filePath}: ${err}`);
+    } else {
+      console.log(`Archivo ${filePath} eliminado con éxito`);
+    }
+  });
+}
+
 
 
 
