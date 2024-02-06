@@ -13,6 +13,8 @@ const proyectoRoute = require("./routes/actividades/proyecto.router")
 const premioRoute = require("./routes/actividades/premio.router")
 const cursoRoute = require("./routes/actividades/curso.router")
 const ponenciaRouter = require("./routes/actividades/ponencia.router")
+const semilleroRouter = require('./routes/semillero.route')
+const authRouter = require("./routes/auth.route")
 const cors = require("cors");
 require("dotenv").config();
 const auth = require('./auth/main_auth')
@@ -65,6 +67,8 @@ app.use('/curso', cursoRoute)
 app.use('/premio', premioRoute)
 app.use('/ponencia' , auth, ponenciaRouter)
 app.use('/proyecto',auth,proyectoRoute)
+app.use('/semillero',semilleroRouter)
+app.use('/auth', authRouter)
 
 app.use("/", (req,res) => {
   res.json("From Index")

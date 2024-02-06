@@ -208,7 +208,8 @@ exports.obtenerFotoPerfil = async (req, res) => {
     const response = {
         msg : '',
         exito: false,
-        data: null
+        data: null,
+        dataEstudiante:null
     }
     const idUsuario = req.params.idUsuario
     console.log(req.params.idUsuario)
@@ -216,9 +217,11 @@ exports.obtenerFotoPerfil = async (req, res) => {
     try {
 
         const data = await UsuarioModel.findOne({idUsuarioRegistro:idUsuario})
+        const dataEstudiante = await EstudianteModel.findOne({_id:idUsuario})
         response.data = data
         response.msg = 'Transacción correcta'
         response.exito = true
+        response.dataEstudiante = dataEstudiante
         res.send(response)
         
     } catch (err) {

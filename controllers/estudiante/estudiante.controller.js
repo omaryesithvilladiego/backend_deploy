@@ -3,6 +3,8 @@ const mongoose = require("mongoose")
 const transporter = require('../../helpers/mail')
 const { ObjectId } = require("mongodb")
 const usuarioModel = require("../../models/usuario.model")
+const path = require('path');
+const fs = require('fs');
 
 
 
@@ -17,7 +19,6 @@ exports.delete = async (req,res) => {
   try {
     const data = await usuarioModel.findOne({idUsuarioRegistro:req.body._id})
     eliminarArchivoLocal(data.fotoPerfilUrl)
-    console.log(data)
     await usuarioModel.deleteOne({idUsuarioRegistro:req.body._id})
     await EstudianteModel.deleteOne({_id:req.body._id})
     response.exito = true
@@ -32,9 +33,10 @@ exports.delete = async (req,res) => {
   }
 }
 
+
 // Función auxiliar para eliminar archivos del almacenamiento local
 function eliminarArchivoLocal(url) {
-  const filePath = path.join(__dirname, '..', 'storage', 'ponencias', path.basename(url));
+  const filePath = path.join('C:\\Users\\omaro\\Desktop\\folder\\backend_deploy\\','storage', 'perfil', path.basename(url));
 
   // Eliminar el archivo
   fs.unlink(filePath, (err) => {

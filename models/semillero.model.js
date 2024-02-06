@@ -1,5 +1,5 @@
-const moongose = require('mongoose')
-const Schema = moongose.Schema
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 require('dotenv').config()
 
 
@@ -12,8 +12,16 @@ const semilleroSchema = new Schema({
         type:String,
         require:true
     },
+    paisSemillero:{
+        type:String,
+        require:true
+    },
     jefeSemillero: {
         type:String,
+        require:true
+    },
+    identificacionJefeSemillero: {
+        type:Number,
         require:true
     },
     misionSemillero: {
@@ -23,3 +31,7 @@ const semilleroSchema = new Schema({
         type:String
     }
 })
+
+const Semillero = mongoose.model("semillero", semilleroSchema);
+
+module.exports = Semillero;
