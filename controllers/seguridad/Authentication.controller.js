@@ -72,7 +72,8 @@ exports.create = async (req,res, next) => {
     let response = {
         msg: '',
         status: false,
-        procesoRegistro: false
+        procesoRegistro: false,
+        correoVerificado: false
     }
 
     function generarNumeroAleatorio() {
@@ -94,12 +95,20 @@ exports.create = async (req,res, next) => {
     try {
        
         const data = await AuthModel.findOne({ correoElectronicoUsuario: mail})
-        if(data) {
+        if(data && !data.correoVerificado) {
         response.msg = 'El correo ya tiene un proceso de registro iniciado'
         response.procesoRegistro = true
         response.status = false
         res.send(response)
         return }
+        else if(data.correoVerificado) {
+            response.msg = 'Su correo está verificado, añada un semillero'
+            response.procesoRegistro = true
+            response.status = false
+            response.correoVerificado = true
+            res.send(response)
+            return
+        }
         await auth.save()
         response.msg = "Codigo generado exitosamente"
         response.status = true
