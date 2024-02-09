@@ -5,8 +5,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoConnect = require('./config/database')
 const moongose = require("mongoose")
-const productoRouter = require("./routes/producto.route")
-const productoSecond = require("./routes/producto.route.second")
 const usuarioRoute = require("./routes/usuario.route")
 const estudianteRoute = require('./routes/estudiante/estudiante.route')
 const proyectoRoute = require("./routes/actividades/proyecto.router")
@@ -59,8 +57,6 @@ const server = app.listen(process.env.API_PORT,() =>{
 
 
 
-app.use("/producto", productoRouter)
-app.use("/producto-second", productoSecond)
 app.use('/usuarios', usuarioRoute)
 app.use('/estudiante', estudianteRoute)
 app.use('/curso', cursoRoute)
