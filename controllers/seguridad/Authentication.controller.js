@@ -3,6 +3,41 @@ const AuthModel = require("../../models/seguridad/AuthenticationCorreoJefe.model
 const transporter = require('../../helpers/mail')
 
 
+exports.updateNumeroSemilleros = async (req,res) => {
+
+    let response = {
+        msg: '',
+        status:false
+    }
+
+    const idSemilleroData = req.body.idSemillero
+    const correoJefe = req.body.emailRegistro
+
+    var numeroSemilleros = 0
+    numeroSemilleros+=1
+    
+
+    try {
+
+        await AuthModel.findOneAndUpdate({correoElectronicoUsuario:correoJefe},{idSemillero:[idSemilleroData]})
+        await AuthModel.findOneAndUpdate({correoElectronicoUsuario:correoJefe},{numeroSemilleros:numeroSemilleros})
+        response.msg = 'Todo fué un éxito'
+        response.msg = true
+        res.send(response)
+    } catch (error) {
+        console.log(error)
+        response.msg = 'Error al actualizar los datos de la autenticación'
+        response.msg = false
+        res.send(response)
+    }
+
+    
+    
+
+
+}
+
+
 exports.confirmCode = async (req,res) => {
     let response = {
         msg: '',
@@ -73,7 +108,8 @@ exports.create = async (req,res, next) => {
         msg: '',
         status: false,
         procesoRegistro: false,
-        correoVerificado: false
+        correoVerificado: false,
+        semilleroAgregado:false
     }
 
     function generarNumeroAleatorio() {
@@ -88,32 +124,46 @@ exports.create = async (req,res, next) => {
 
        let auth = new AuthModel({
         correoElectronicoUsuario: mail,
-        codigoSeguridad:numero
+        codigoSeguridad:numero,
+        correoVerificado:false,
+        numeroSemilleros:0
     })
 
  
     try {
        
         const data = await AuthModel.findOne({ correoElectronicoUsuario: mail})
-        if(data && !data.correoVerificado) {
-        response.msg = 'El correo ya tiene un proceso de registro iniciado'
-        response.procesoRegistro = true
-        response.status = false
-        res.send(response)
-        return }
-        else if(data.correoVerificado) {
-            response.msg = 'Su correo está verificado, añada un semillero'
-            response.procesoRegistro = true
-            response.status = false
-            response.correoVerificado = true
-            res.send(response)
-            return
-        }
+        if(data) {
+            if(!data.correoVerificado) {
+                response.msg = 'El correo ya tiene un proceso de registro iniciado, recibirá otro còdigo'
+                response.procesoRegistro = true
+                response.status = false
+                res.send(response)
+                return
+            } else if(data.numeroSemilleros >= 1) {
+                response.msg = 'Ya tiene un semillero registrado, no puede registrar más'
+                response.procesoRegistro = true
+                response.status = false
+                response.semilleroAgregado = true
+                res.send(response)
+                return
+            } else {
+                response.msg = 'Su correo está verificado, añada un semillero'
+                response.procesoRegistro = true
+                response.status = false
+                response.correoVerificado = true
+                res.send(response)
+                return
+            } 
+           
+       }
+     
         await auth.save()
         response.msg = "Codigo generado exitosamente"
         response.status = true
         res.send(response)
         console.log(response)
+
         const resultSendMail = await transporter.sendMail({
             from: "",
             to:mail,

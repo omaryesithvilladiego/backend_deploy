@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb")
 const PonenciaModel = require("../../models/actividades/ponencia.model")
 
 
@@ -58,6 +59,9 @@ exports.create = async (req,res) => {
     }
 
 
+    const idToObjectId = new ObjectId(req.body.idEstudiantePonencia)
+    console.log(idToObjectId)
+
 
     let ponencia = new PonenciaModel({
         nombreEventoPonencia: req.body.nombreEventoPonencia,
@@ -69,14 +73,14 @@ exports.create = async (req,res) => {
         presentacionEventoUrlPonencia: req.body.presentacionEventoUrlPonencia,
         imagenMemoriasUrlPonencia: req.body.imagenMemoriasUrlPonencia,
         fechaPonencia: req.body.fechaPonencia,
-        idEstudiantePonencia: req.body.idEstudiantePonencia,
+        idEstudiantePonencia: idToObjectId,
         estadoPonencia: 'Pendiente',
         colorEstadoPonencia: 'yellow'
 
     })
+    console.log(req.body)
 
 
-    console.log(req.files)
     if(req.files) {
         const certificado = req.files.certificadoEventoUrlPonencia[0].filename
         const presentacionEvento = req.files.presentacionEventoUrlPonencia[0].filename

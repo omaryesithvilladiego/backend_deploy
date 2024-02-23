@@ -37,6 +37,14 @@ app.use(cors())
 
 
 
+app.use('/usuarios', usuarioRoute)
+app.use('/estudiante', estudianteRoute)
+app.use('/curso', cursoRoute)
+app.use('/premio', premioRoute)
+app.use('/ponencia' , auth, ponenciaRouter)
+app.use('/proyecto',auth,proyectoRoute)
+app.use('/semillero',semilleroRouter)
+app.use('/auth', authRouter)
 
 
 
@@ -57,14 +65,6 @@ const server = app.listen(process.env.API_PORT,() =>{
 
 
 
-app.use('/usuarios', usuarioRoute)
-app.use('/estudiante', estudianteRoute)
-app.use('/curso', cursoRoute)
-app.use('/premio', premioRoute)
-app.use('/ponencia' , auth, ponenciaRouter)
-app.use('/proyecto',auth,proyectoRoute)
-app.use('/semillero',semilleroRouter)
-app.use('/auth', authRouter)
 
 app.use("/", (req,res) => {
   res.json("From Index")

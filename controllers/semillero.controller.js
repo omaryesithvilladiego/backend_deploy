@@ -1,11 +1,12 @@
 const SemilleroModel = require('../models/semillero.model')
 
-
 exports.create = async (req,res) => {
     let response = {
         msg:'',
-        exito:false
+        exito:false,
+        idSemilleroCreated:null
     }
+
 
     let semillero = new SemilleroModel({
         nombreSemillero: req.body.nombreSemillero,
@@ -17,10 +18,13 @@ exports.create = async (req,res) => {
         visionSemillero: req.body.visionSemillero
     })
 
+    
+
     try {
-        await semillero.save()
+        const semilleroData = await semillero.save()
         response.msg = 'El semillero se ha guardado correctamente'
         response.exito = true
+        response.idSemilleroCreated = semilleroData._id
         res.send(response)
         
         
